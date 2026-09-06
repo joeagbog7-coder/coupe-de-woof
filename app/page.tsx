@@ -338,8 +338,7 @@ export default function Home() {
   const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 
   const email =
-    siteContent.email ||
-    "coupedewoof@gmail.com";
+    siteContent.email || "coupedewoof@gmail.com";
 
   const address =
     siteContent.address ||
@@ -375,15 +374,15 @@ export default function Home() {
       ========================================================= */}
 
       <header className="absolute left-0 top-0 z-50 w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-10">
 
           {/* LOGO + NOM DU SITE */}
 
           <a
             href="#accueil"
-            className="flex items-center gap-3 text-[#f3e9d0] drop-shadow-lg"
+            className="flex shrink-0 items-center gap-2 text-[#f3e9d0] drop-shadow-lg"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#f3e9d0]">
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-[#f3e9d0] sm:h-11 sm:w-11">
               <Image
                 src="/images/logo.jpeg"
                 alt="Logo Coupe de Woof"
@@ -393,7 +392,7 @@ export default function Home() {
               />
             </div>
 
-            <span className="font-display text-xl tracking-wide">
+            <span className="whitespace-nowrap font-display text-lg tracking-wide sm:text-xl">
               Coupe de Woof
             </span>
           </a>
@@ -423,7 +422,7 @@ export default function Home() {
 
           <a
             href="#contact"
-            className="rounded-full bg-[#3a2c20] px-5 py-2.5 text-sm font-semibold text-[#f3e9d0] shadow-xl shadow-black/20 transition-all hover:-translate-y-0.5 hover:bg-[#4a3828]"
+            className="shrink-0 whitespace-nowrap rounded-full bg-[#3a2c20] px-3 py-2 text-xs font-semibold text-[#f3e9d0] shadow-xl shadow-black/20 transition-all hover:-translate-y-0.5 hover:bg-[#4a3828] sm:px-5 sm:py-2.5 sm:text-sm"
           >
             Nous contacter
           </a>
@@ -528,7 +527,7 @@ export default function Home() {
 
               <p className="mt-7 max-w-xl font-times text-xl leading-8 text-[#f3e9d0]/95 sm:text-2xl">
 
-                Toilettage, soins et mise en beauté{" "}
+                Toilettage, soins et mise en beauté
 
                 <br className="hidden sm:block" />
 
