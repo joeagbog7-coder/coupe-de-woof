@@ -13,7 +13,7 @@ const fallbackServices = [
     ],
   },
   {
-    title: "Moyen chien",
+    title: "Intermédiaire",
     items: [
       ["Tonte", "50 €"],
       ["Coupe ciseaux", "55 €"],
@@ -145,7 +145,7 @@ function groupServicesFromApi(items: ApiService[] | undefined) {
         items: petit.length ? petit : fallbackServices[0].items,
       },
       {
-        title: "Moyen chien",
+        title: "Intermediaire",
         items: moyen.length ? moyen : fallbackServices[1].items,
       },
       {
@@ -338,7 +338,8 @@ export default function Home() {
   const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 
   const email =
-    siteContent.email || "coupedewoof@gmail.com";
+    siteContent.email ||
+    "coupedewoof@gmail.com";
 
   const address =
     siteContent.address ||
@@ -527,7 +528,7 @@ export default function Home() {
 
               <p className="mt-7 max-w-xl font-times text-xl leading-8 text-[#f3e9d0]/95 sm:text-2xl">
 
-                Toilettage, soins et mise en beauté
+                Toilettage, soins et mise en beauté{" "}
 
                 <br className="hidden sm:block" />
 

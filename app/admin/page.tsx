@@ -418,7 +418,7 @@ export default function AdminPage() {
       ),
     },
     {
-      title: "Moyen chien",
+      title: "Intermediaire",
       category: "Moyen chien",
       items: services.filter(
         (service) => service.category === "Moyen chien"
