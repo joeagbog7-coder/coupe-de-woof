@@ -444,7 +444,7 @@ export default function Home() {
 
         <div className="absolute inset-0">
           <Image
-            src="/images/hero.jpeg"
+            src="/images/hero-final.jpeg"
             alt="Chien après toilettage chez Coupe de Woof"
             fill
             priority
