@@ -40,11 +40,14 @@ const defaultContent: Record<string, string> = {
   hero_description:
     "Toilettage, soins et mise en beauté\npour chiens, chats et NAC.",
   hero_categories: "CHIENS • CHATS • NAC",
+
   contact_phone: "07 62 53 14 92",
   contact_email: "coupedewoof@gmail.com",
   contact_address:
     "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau",
   contact_instagram: "@coupedewoof",
+  contact_facebook: "coupedewoof",
+
   opening_hours:
     "Lundi : 9h00 – 18h00\nMardi : 9h00 – 18h00\nMercredi : 9h00 – 18h00\nJeudi : 9h00 – 18h00\nVendredi : 9h00 – 18h00\nSamedi : 9h00 – 17h00\nDimanche : Fermé",
 };
@@ -247,6 +250,19 @@ function HeartIcon() {
   );
 }
 
+function FacebookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d="M14 8h3V4h-3c-3.31 0-5 1.69-5 5v2H6v4h3v5h4v-5h3l1-4h-4V9c0-.67.33-1 1-1Z" />
+    </svg>
+  );
+}
+
 function GalleryPair({
   item,
   index,
@@ -311,13 +327,21 @@ export default function Home() {
         if (cancelled) return;
 
         setContent(
-          Array.isArray(data.siteContent) ? data.siteContent : []
+          Array.isArray(data.siteContent)
+            ? data.siteContent
+            : []
         );
+
         setServices(
-          Array.isArray(data.services) ? data.services : []
+          Array.isArray(data.services)
+            ? data.services
+            : []
         );
+
         setGallery(
-          Array.isArray(data.gallery) ? data.gallery : []
+          Array.isArray(data.gallery)
+            ? data.gallery
+            : []
         );
       } catch (error) {
         console.error("Erreur chargement contenu :", error);
@@ -335,34 +359,61 @@ export default function Home() {
     };
   }, []);
 
-  const siteName = getContentValue(content, "site_name");
-  const heroKicker = getContentValue(content, "hero_kicker");
-  const heroLocation = getContentValue(content, "hero_location");
-  const heroTitle = getContentValue(content, "hero_title");
+  const siteName = getContentValue(
+    content,
+    "site_name"
+  );
+
+  const heroKicker = getContentValue(
+    content,
+    "hero_kicker"
+  );
+
+  const heroLocation = getContentValue(
+    content,
+    "hero_location"
+  );
+
+  const heroTitle = getContentValue(
+    content,
+    "hero_title"
+  );
+
   const heroDescription = getContentValue(
     content,
     "hero_description"
   );
+
   const heroCategories = getContentValue(
     content,
     "hero_categories"
   );
+
   const contactPhone = getContentValue(
     content,
     "contact_phone"
   );
+
   const contactEmail = getContentValue(
     content,
     "contact_email"
   );
+
   const contactAddress = getContentValue(
     content,
     "contact_address"
   );
+
   const contactInstagram = getContentValue(
     content,
     "contact_instagram"
   );
+
+  const contactFacebook = getContentValue(
+    content,
+    "contact_facebook"
+  );
+
   const openingHours = getContentValue(
     content,
     "opening_hours"
@@ -377,7 +428,9 @@ export default function Home() {
   }, [services]);
 
   const galleryItems =
-    gallery.length > 0 ? gallery : defaultGallery;
+    gallery.length > 0
+      ? gallery
+      : defaultGallery;
 
   const instagramUrl = contactInstagram
     ? contactInstagram.startsWith("http")
@@ -388,14 +441,27 @@ export default function Home() {
         )}/`
     : "https://www.instagram.com/coupedewoof/";
 
+  const facebookUrl = contactFacebook
+    ? contactFacebook.startsWith("http")
+      ? contactFacebook
+      : `https://www.facebook.com/${contactFacebook.replace(
+          /^@/,
+          ""
+        )}/`
+    : "https://www.facebook.com/coupedewoof/";
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#3a2c20] text-[#f3e9d0]">
+
       {/* =========================================================
           HEADER
       ========================================================== */}
+
       <header className="absolute left-0 top-0 z-50 w-full">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-10">
+
           {/* LOGO + NOM DU SITE */}
+
           <a
             href="#accueil"
             className="flex shrink-0 items-center gap-2 text-[#f3e9d0] drop-shadow-lg"
@@ -416,24 +482,28 @@ export default function Home() {
           </a>
 
           <nav className="hidden items-center gap-9 text-sm font-medium text-[#f3e9d0] md:flex">
+
             <a
               href="#prestations"
               className="transition hover:text-[#cfa97c]"
             >
               Prestations
             </a>
+
             <a
               href="#galerie"
               className="transition hover:text-[#cfa97c]"
             >
               Galerie
             </a>
+
             <a
               href="#contact"
               className="transition hover:text-[#cfa97c]"
             >
               Contact
             </a>
+
           </nav>
 
           <a
@@ -442,17 +512,22 @@ export default function Home() {
           >
             Nous contacter
           </a>
+
         </div>
       </header>
+
 
       {/* =========================================================
           HERO
       ========================================================== */}
+
       <section
         id="accueil"
         className="relative flex min-h-screen items-center overflow-hidden"
       >
+
         {/* PHOTO DE FOND */}
+
         <div className="absolute inset-0">
           <Image
             src="/images/hero-final.jpeg"
@@ -465,19 +540,27 @@ export default function Home() {
         </div>
 
         {/* OVERLAY */}
+
         <div className="absolute inset-0 bg-[#160f0a]/65" />
+
         <div className="absolute inset-0 bg-gradient-to-r from-[#160f0a]/95 via-[#160f0a]/65 to-[#160f0a]/30" />
 
         {/* FORME CIRCULAIRE */}
+
         <div className="absolute -right-40 -top-32 h-[560px] w-[560px] rounded-full border border-[#f3e9d0]/15 bg-[#f3e9d0]/5 blur-[1px] md:h-[680px] md:w-[680px]" />
 
         <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-center px-6 pb-20 pt-32 lg:px-10">
+
           <div className="max-w-4xl">
+
             <div className="mb-7 flex items-center gap-7">
+
               <span className="h-px w-20 bg-[#cfa97c]" />
+
               <span className="text-xs font-semibold uppercase tracking-[0.5em] text-[#f3e9d0] sm:text-sm">
                 {heroKicker}
               </span>
+
             </div>
 
             <p className="mb-8 text-xs font-semibold uppercase tracking-[0.42em] text-[#cfa97c] sm:text-sm">
@@ -489,9 +572,13 @@ export default function Home() {
             </h1>
 
             <div className="mt-12 flex items-center gap-7 text-[#cfa97c]">
+
               <span className="h-px w-24 bg-[#cfa97c]" />
+
               <ScissorsIcon />
+
               <span className="h-px w-24 bg-[#cfa97c]" />
+
             </div>
 
             <p className="mt-7 max-w-xl font-times text-xl leading-8 text-[#f3e9d0]/95 sm:text-2xl">
@@ -503,6 +590,7 @@ export default function Home() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#f3e9d0]/80 sm:text-xs">
+
               {heroCategories
                 .split("•")
                 .map((category, index, array) => (
@@ -510,18 +598,24 @@ export default function Home() {
                     key={`${category}-${index}`}
                     className="flex items-center gap-3"
                   >
-                    <span>{category.trim()}</span>
+
+                    <span>
+                      {category.trim()}
+                    </span>
 
                     {index < array.length - 1 && (
                       <span className="text-[#cfa97c]">
                         •
                       </span>
                     )}
+
                   </span>
                 ))}
+
             </div>
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+
               <a
                 href="#prestations"
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-[#b67c43] px-8 py-4 text-sm font-semibold text-[#fff9eb] shadow-xl shadow-black/25 transition-all hover:-translate-y-1 hover:bg-[#c58c52]"
@@ -536,39 +630,56 @@ export default function Home() {
               >
                 Nous contacter
               </a>
+
             </div>
+
           </div>
+
         </div>
 
         {/* INDICATEUR */}
+
         <a
           href="#prestations"
           className="absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-3 text-[#f3e9d0]/70 sm:flex"
         >
-          <span className="text-xl">↓</span>
+          <span className="text-xl">
+            ↓
+          </span>
+
           <span className="text-[9px] uppercase tracking-[0.5em]">
             Découvrir
           </span>
         </a>
+
       </section>
+
 
       {/* =========================================================
           PRESTATIONS
       ========================================================== */}
+
       <section
         id="prestations"
         className="relative overflow-hidden bg-[#3a2c20] py-24 sm:py-32"
       >
+
         <div className="absolute right-[-250px] top-[-250px] h-[600px] w-[600px] rounded-full border border-[#cfa97c]/10" />
+
         <div className="absolute bottom-[-350px] left-[-300px] h-[650px] w-[650px] rounded-full border border-[#cfa97c]/10" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+
           <div className="mb-16 max-w-3xl">
+
             <div className="mb-7 flex items-center gap-7">
+
               <span className="h-px w-20 bg-[#cfa97c]" />
+
               <span className="text-xs font-semibold uppercase tracking-[0.5em] text-[#cfa97c] sm:text-sm">
                 Prestations & tarifs
               </span>
+
             </div>
 
             <h2 className="font-display text-5xl leading-none tracking-[-0.04em] text-[#f3e9d0] sm:text-6xl md:text-7xl">
@@ -580,9 +691,10 @@ export default function Home() {
             </h2>
 
             <p className="mt-7 max-w-2xl font-times text-lg leading-8 text-[#f3e9d0]/75 sm:text-xl">
-              Des prestations pensées pour offrir à chaque animal un
-              moment de soin, de confort et de beauté.
+              Des prestations pensées pour offrir à chaque animal un moment
+              de soin, de confort et de beauté.
             </p>
+
           </div>
 
           {!loaded && (
@@ -592,17 +704,22 @@ export default function Home() {
           )}
 
           <div className="grid gap-8 lg:grid-cols-3">
+
             {serviceGroups.map((group) => (
+
               <div
                 key={group.category}
                 className="rounded-[2rem] border border-[#cfa97c]/20 bg-[#fff9eb]/5 p-7 shadow-2xl shadow-black/10 backdrop-blur-sm sm:p-8"
               >
+
                 <div className="mb-8 flex items-center justify-between border-b border-[#cfa97c]/20 pb-6">
+
                   <h3 className="font-display text-3xl text-[#f3e9d0]">
                     {group.category}
                   </h3>
 
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#cfa97c]/30 text-[#cfa97c]">
+
                     {group.category.toUpperCase() ===
                     "CHIENS" ? (
                       <DogIcon />
@@ -612,18 +729,24 @@ export default function Home() {
                     ) : (
                       <HeartIcon />
                     )}
+
                   </div>
+
                 </div>
 
                 <div className="space-y-7">
+
                   {group.services.map((service) => (
+
                     <article
                       key={
                         service.id ??
                         `${group.category}-${service.name}`
                       }
                     >
+
                       <div className="flex items-start justify-between gap-5">
+
                         <h4 className="font-display text-xl leading-tight text-[#f3e9d0]">
                           {service.name}
                         </h4>
@@ -631,6 +754,7 @@ export default function Home() {
                         <span className="shrink-0 text-sm font-semibold text-[#cfa97c]">
                           {service.price}
                         </span>
+
                       </div>
 
                       {service.description && (
@@ -638,24 +762,33 @@ export default function Home() {
                           {service.description}
                         </p>
                       )}
+
                     </article>
+
                   ))}
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
 
           <div className="mt-12 rounded-[2rem] border border-[#cfa97c]/20 bg-[#fff9eb]/5 p-7 sm:p-8">
+
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+
               <div>
+
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                   Une demande particulière ?
                 </p>
 
                 <p className="mt-3 font-times text-lg text-[#f3e9d0]/80">
-                  Contactez-nous pour connaître la prestation la plus
-                  adaptée.
+                  Contactez-nous pour connaître la prestation la plus adaptée.
                 </p>
+
               </div>
 
               <a
@@ -665,28 +798,41 @@ export default function Home() {
                 Nous contacter
                 <ArrowIcon />
               </a>
+
             </div>
+
           </div>
+
         </div>
+
       </section>
+
 
       {/* =========================================================
           GALERIE
       ========================================================== */}
+
       <section
         id="galerie"
         className="relative overflow-hidden bg-[#f3e9d0] py-24 text-[#3a2c20] sm:py-32"
       >
+
         <div className="absolute right-[-180px] top-[-180px] h-[500px] w-[500px] rounded-full border border-[#3a2c20]/10" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+
           <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+
             <div>
+
               <div className="mb-7 flex items-center gap-7">
+
                 <span className="h-px w-20 bg-[#b67c43]" />
+
                 <span className="text-xs font-semibold uppercase tracking-[0.5em] text-[#b67c43] sm:text-sm">
                   Galerie
                 </span>
+
               </div>
 
               <h2 className="font-display text-5xl leading-none tracking-[-0.04em] sm:text-6xl md:text-7xl">
@@ -696,44 +842,62 @@ export default function Home() {
                   Après.
                 </span>
               </h2>
+
             </div>
 
             <p className="max-w-md font-times text-lg leading-8 text-[#3a2c20]/65 sm:text-xl">
               Découvrez quelques transformations réalisées avec soin pour
               révéler toute la beauté de nos compagnons.
             </p>
+
           </div>
 
           <div className="grid gap-7 md:grid-cols-2">
+
             {galleryItems.map((item, index) => (
+
               <GalleryPair
                 key={item.id ?? index}
                 item={item}
                 index={index}
               />
+
             ))}
+
           </div>
+
         </div>
+
       </section>
+
 
       {/* =========================================================
           CONTACT
       ========================================================== */}
+
       <section
         id="contact"
         className="relative overflow-hidden bg-[#3a2c20] py-24 sm:py-32"
       >
+
         <div className="absolute left-[-280px] top-[-280px] h-[650px] w-[650px] rounded-full border border-[#cfa97c]/10" />
+
         <div className="absolute right-[-280px] bottom-[-350px] h-[700px] w-[700px] rounded-full border border-[#cfa97c]/10" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+
           <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+
             <div>
+
               <div className="mb-7 flex items-center gap-7">
+
                 <span className="h-px w-20 bg-[#cfa97c]" />
+
                 <span className="text-xs font-semibold uppercase tracking-[0.5em] text-[#cfa97c] sm:text-sm">
                   Contact
                 </span>
+
               </div>
 
               <h2 className="font-display text-5xl leading-none tracking-[-0.04em] sm:text-6xl md:text-7xl">
@@ -750,6 +914,7 @@ export default function Home() {
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
+
                 <a
                   href={instagramUrl}
                   target="_blank"
@@ -757,6 +922,16 @@ export default function Home() {
                   className="inline-flex items-center justify-center rounded-full bg-[#b67c43] px-7 py-3.5 text-sm font-semibold text-[#fff9eb] transition hover:bg-[#c58c52]"
                 >
                   Instagram
+                </a>
+
+                <a
+                  href={facebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#f3e9d0]/50 px-7 py-3.5 text-sm font-semibold text-[#f3e9d0] transition hover:bg-[#f3e9d0]/10"
+                >
+                  <FacebookIcon />
+                  Facebook
                 </a>
 
                 {contactPhone && (
@@ -770,13 +945,19 @@ export default function Home() {
                     Appeler
                   </a>
                 )}
+
               </div>
+
             </div>
 
+
             <div className="rounded-[2rem] border border-[#cfa97c]/20 bg-[#fff9eb]/5 p-8 shadow-2xl shadow-black/10 backdrop-blur-sm sm:p-10">
+
               <div className="space-y-8">
+
                 {contactAddress && (
                   <div>
+
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Adresse
                     </p>
@@ -784,11 +965,13 @@ export default function Home() {
                     <p className="mt-3 whitespace-pre-line font-times text-lg leading-7 text-[#f3e9d0]">
                       {contactAddress}
                     </p>
+
                   </div>
                 )}
 
                 {contactPhone && (
                   <div>
+
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Téléphone
                     </p>
@@ -802,11 +985,13 @@ export default function Home() {
                     >
                       {contactPhone}
                     </a>
+
                   </div>
                 )}
 
                 {contactEmail && (
                   <div>
+
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Email
                     </p>
@@ -817,10 +1002,12 @@ export default function Home() {
                     >
                       {contactEmail}
                     </a>
+
                   </div>
                 )}
 
                 <div>
+
                   <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                     Instagram
                   </p>
@@ -833,9 +1020,31 @@ export default function Home() {
                   >
                     {contactInstagram || "@coupedewoof"}
                   </a>
+
+                </div>
+
+                <div>
+
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
+                    Facebook
+                  </p>
+
+                  <a
+                    href={facebookUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 flex items-center gap-3 font-times text-lg text-[#f3e9d0] transition hover:text-[#cfa97c]"
+                  >
+                    <FacebookIcon />
+                    <span>
+                      {contactFacebook || "coupedewoof"}
+                    </span>
+                  </a>
+
                 </div>
 
                 <div className="border-t border-[#cfa97c]/20 pt-8">
+
                   <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                     Horaires
                   </p>
@@ -843,18 +1052,28 @@ export default function Home() {
                   <p className="mt-4 whitespace-pre-line font-times text-base leading-7 text-[#f3e9d0]/80">
                     {openingHours}
                   </p>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </section>
+
 
       {/* =========================================================
           FOOTER
       ========================================================== */}
+
       <footer className="border-t border-[#cfa97c]/15 bg-[#2c2118] py-8">
+
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left lg:px-10">
+
           <p className="font-display text-lg text-[#f3e9d0]">
             {siteName}
           </p>
@@ -863,16 +1082,33 @@ export default function Home() {
             Toilettage • Soins • Bien-être
           </p>
 
-          <a
-            href={instagramUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs uppercase tracking-[0.25em] text-[#cfa97c] transition hover:text-[#f3e9d0]"
-          >
-            {contactInstagram || "@coupedewoof"}
-          </a>
+          <div className="flex items-center justify-center gap-5 sm:justify-end">
+
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs uppercase tracking-[0.25em] text-[#cfa97c] transition hover:text-[#f3e9d0]"
+            >
+              Instagram
+            </a>
+
+            <a
+              href={facebookUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#cfa97c] transition hover:text-[#f3e9d0]"
+            >
+              <FacebookIcon />
+              Facebook
+            </a>
+
+          </div>
+
         </div>
+
       </footer>
+
     </main>
   );
 }
