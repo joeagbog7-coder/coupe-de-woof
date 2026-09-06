@@ -40,9 +40,10 @@ const defaultContent: Record<string, string> = {
   hero_description:
     "Toilettage, soins et mise en beauté\npour chiens, chats et NAC.",
   hero_categories: "CHIENS • CHATS • NAC",
-  contact_phone: "",
-  contact_email: "",
-  contact_address: "",
+  contact_phone: "07 62 53 14 92",
+  contact_email: "coupedewoof@gmail.com",
+  contact_address:
+    "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau",
   contact_instagram: "@coupedewoof",
   opening_hours:
     "Lundi : 9h00 – 18h00\nMardi : 9h00 – 18h00\nMercredi : 9h00 – 18h00\nJeudi : 9h00 – 18h00\nVendredi : 9h00 – 18h00\nSamedi : 9h00 – 17h00\nDimanche : Fermé",
@@ -69,7 +70,8 @@ const defaultServices: Service[] = [
     category: "CHIENS",
     name: "Coupe des griffes",
     price: "À partir de 10 €",
-    description: "Une prestation rapide pour garder les griffes confortables.",
+    description:
+      "Une prestation rapide pour garder les griffes confortables.",
     position: 3,
   },
   {
@@ -117,7 +119,11 @@ function getContentValue(
   content: SiteContentItem[],
   key: string
 ): string {
-  return content.find((item) => item.key === key)?.value ?? defaultContent[key] ?? "";
+  return (
+    content.find((item) => item.key === key)?.value ??
+    defaultContent[key] ??
+    ""
+  );
 }
 
 function groupServices(services: Service[]): ServiceGroup[] {
@@ -304,9 +310,15 @@ export default function Home() {
 
         if (cancelled) return;
 
-        setContent(Array.isArray(data.siteContent) ? data.siteContent : []);
-        setServices(Array.isArray(data.services) ? data.services : []);
-        setGallery(Array.isArray(data.gallery) ? data.gallery : []);
+        setContent(
+          Array.isArray(data.siteContent) ? data.siteContent : []
+        );
+        setServices(
+          Array.isArray(data.services) ? data.services : []
+        );
+        setGallery(
+          Array.isArray(data.gallery) ? data.gallery : []
+        );
       } catch (error) {
         console.error("Erreur chargement contenu :", error);
       } finally {
@@ -327,13 +339,34 @@ export default function Home() {
   const heroKicker = getContentValue(content, "hero_kicker");
   const heroLocation = getContentValue(content, "hero_location");
   const heroTitle = getContentValue(content, "hero_title");
-  const heroDescription = getContentValue(content, "hero_description");
-  const heroCategories = getContentValue(content, "hero_categories");
-  const contactPhone = getContentValue(content, "contact_phone");
-  const contactEmail = getContentValue(content, "contact_email");
-  const contactAddress = getContentValue(content, "contact_address");
-  const contactInstagram = getContentValue(content, "contact_instagram");
-  const openingHours = getContentValue(content, "opening_hours");
+  const heroDescription = getContentValue(
+    content,
+    "hero_description"
+  );
+  const heroCategories = getContentValue(
+    content,
+    "hero_categories"
+  );
+  const contactPhone = getContentValue(
+    content,
+    "contact_phone"
+  );
+  const contactEmail = getContentValue(
+    content,
+    "contact_email"
+  );
+  const contactAddress = getContentValue(
+    content,
+    "contact_address"
+  );
+  const contactInstagram = getContentValue(
+    content,
+    "contact_instagram"
+  );
+  const openingHours = getContentValue(
+    content,
+    "opening_hours"
+  );
 
   const serviceGroups = useMemo(() => {
     if (services.length === 0) {
@@ -349,7 +382,10 @@ export default function Home() {
   const instagramUrl = contactInstagram
     ? contactInstagram.startsWith("http")
       ? contactInstagram
-      : `https://www.instagram.com/${contactInstagram.replace(/^@/, "")}/`
+      : `https://www.instagram.com/${contactInstagram.replace(
+          /^@/,
+          ""
+        )}/`
     : "https://www.instagram.com/coupedewoof/";
 
   return (
@@ -475,8 +511,11 @@ export default function Home() {
                     className="flex items-center gap-3"
                   >
                     <span>{category.trim()}</span>
+
                     {index < array.length - 1 && (
-                      <span className="text-[#cfa97c]">•</span>
+                      <span className="text-[#cfa97c]">
+                        •
+                      </span>
                     )}
                   </span>
                 ))}
@@ -535,12 +574,14 @@ export default function Home() {
             <h2 className="font-display text-5xl leading-none tracking-[-0.04em] text-[#f3e9d0] sm:text-6xl md:text-7xl">
               Prendre soin de
               <br />
-              <span className="text-[#cfa97c]">votre compagnon.</span>
+              <span className="text-[#cfa97c]">
+                votre compagnon.
+              </span>
             </h2>
 
             <p className="mt-7 max-w-2xl font-times text-lg leading-8 text-[#f3e9d0]/75 sm:text-xl">
-              Des prestations pensées pour offrir à chaque animal un moment
-              de soin, de confort et de beauté.
+              Des prestations pensées pour offrir à chaque animal un
+              moment de soin, de confort et de beauté.
             </p>
           </div>
 
@@ -562,9 +603,11 @@ export default function Home() {
                   </h3>
 
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#cfa97c]/30 text-[#cfa97c]">
-                    {group.category.toUpperCase() === "CHIENS" ? (
+                    {group.category.toUpperCase() ===
+                    "CHIENS" ? (
                       <DogIcon />
-                    ) : group.category.toUpperCase() === "CHATS" ? (
+                    ) : group.category.toUpperCase() ===
+                      "CHATS" ? (
                       <CatIcon />
                     ) : (
                       <HeartIcon />
@@ -574,7 +617,12 @@ export default function Home() {
 
                 <div className="space-y-7">
                   {group.services.map((service) => (
-                    <article key={service.id ?? `${group.category}-${service.name}`}>
+                    <article
+                      key={
+                        service.id ??
+                        `${group.category}-${service.name}`
+                      }
+                    >
                       <div className="flex items-start justify-between gap-5">
                         <h4 className="font-display text-xl leading-tight text-[#f3e9d0]">
                           {service.name}
@@ -605,7 +653,8 @@ export default function Home() {
                 </p>
 
                 <p className="mt-3 font-times text-lg text-[#f3e9d0]/80">
-                  Contactez-nous pour connaître la prestation la plus adaptée.
+                  Contactez-nous pour connaître la prestation la plus
+                  adaptée.
                 </p>
               </div>
 
@@ -643,7 +692,9 @@ export default function Home() {
               <h2 className="font-display text-5xl leading-none tracking-[-0.04em] sm:text-6xl md:text-7xl">
                 Avant.
                 <br />
-                <span className="text-[#b67c43]">Après.</span>
+                <span className="text-[#b67c43]">
+                  Après.
+                </span>
               </h2>
             </div>
 
@@ -688,7 +739,9 @@ export default function Home() {
               <h2 className="font-display text-5xl leading-none tracking-[-0.04em] sm:text-6xl md:text-7xl">
                 Parlons de
                 <br />
-                <span className="text-[#cfa97c]">votre compagnon.</span>
+                <span className="text-[#cfa97c]">
+                  votre compagnon.
+                </span>
               </h2>
 
               <p className="mt-8 max-w-xl font-times text-lg leading-8 text-[#f3e9d0]/70 sm:text-xl">
@@ -708,7 +761,10 @@ export default function Home() {
 
                 {contactPhone && (
                   <a
-                    href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                    href={`tel:${contactPhone.replace(
+                      /\s/g,
+                      ""
+                    )}`}
                     className="inline-flex items-center justify-center rounded-full border border-[#f3e9d0]/50 px-7 py-3.5 text-sm font-semibold text-[#f3e9d0] transition hover:bg-[#f3e9d0]/10"
                   >
                     Appeler
@@ -724,6 +780,7 @@ export default function Home() {
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Adresse
                     </p>
+
                     <p className="mt-3 whitespace-pre-line font-times text-lg leading-7 text-[#f3e9d0]">
                       {contactAddress}
                     </p>
@@ -735,8 +792,12 @@ export default function Home() {
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Téléphone
                     </p>
+
                     <a
-                      href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                      href={`tel:${contactPhone.replace(
+                        /\s/g,
+                        ""
+                      )}`}
                       className="mt-3 block font-times text-lg text-[#f3e9d0] transition hover:text-[#cfa97c]"
                     >
                       {contactPhone}
@@ -749,6 +810,7 @@ export default function Home() {
                     <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                       Email
                     </p>
+
                     <a
                       href={`mailto:${contactEmail}`}
                       className="mt-3 block break-all font-times text-lg text-[#f3e9d0] transition hover:text-[#cfa97c]"
@@ -762,6 +824,7 @@ export default function Home() {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#cfa97c]">
                     Instagram
                   </p>
+
                   <a
                     href={instagramUrl}
                     target="_blank"
