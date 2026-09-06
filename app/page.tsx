@@ -40,14 +40,12 @@ const defaultContent: Record<string, string> = {
   hero_description:
     "Toilettage, soins et mise en beauté\npour chiens, chats et NAC.",
   hero_categories: "CHIENS • CHATS • NAC",
-
   contact_phone: "07 62 53 14 92",
   contact_email: "coupedewoof@gmail.com",
   contact_address:
     "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau",
   contact_instagram: "@coupedewoof",
   contact_facebook: "coupedewoof",
-
   opening_hours:
     "Lundi : 9h00 – 18h00\nMardi : 9h00 – 18h00\nMercredi : 9h00 – 18h00\nJeudi : 9h00 – 18h00\nVendredi : 9h00 – 18h00\nSamedi : 9h00 – 17h00\nDimanche : Fermé",
 };
@@ -129,13 +127,29 @@ function getContentValue(
   );
 }
 
+function normalizeCategory(category: string): string {
+  const normalized = category.trim().toUpperCase();
+
+  if (
+    normalized === "MOYEN CHIEN" ||
+    normalized === "MOYEN CHIENS" ||
+    normalized === "INTERMEDIAIRE"
+  ) {
+    return "INTERMÉDIAIRE";
+  }
+
+  return normalized;
+}
+
 function groupServices(services: Service[]): ServiceGroup[] {
   const groups = new Map<string, Service[]>();
 
   for (const service of services) {
     if (!service.active && service.active !== undefined) continue;
 
-    const category = service.category || "AUTRES";
+    const category = normalizeCategory(
+      service.category || "AUTRES"
+    );
 
     if (!groups.has(category)) {
       groups.set(category, []);
@@ -144,12 +158,35 @@ function groupServices(services: Service[]): ServiceGroup[] {
     groups.get(category)!.push(service);
   }
 
-  return Array.from(groups.entries()).map(([category, items]) => ({
-    category,
-    services: [...items].sort(
-      (a, b) => (a.position ?? 0) - (b.position ?? 0)
-    ),
-  }));
+  const categoryOrder = [
+    "PETIT CHIEN",
+    "INTERMÉDIAIRE",
+    "GRAND CHIEN",
+    "AUTRES",
+    "CHAT",
+    "NAC",
+  ];
+
+  return Array.from(groups.entries())
+    .map(([category, items]) => ({
+      category,
+      services: [...items].sort(
+        (a, b) => (a.position ?? 0) - (b.position ?? 0)
+      ),
+    }))
+    .sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a.category);
+      const indexB = categoryOrder.indexOf(b.category);
+
+      if (indexA === -1 && indexB === -1) {
+        return a.category.localeCompare(b.category);
+      }
+
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+
+      return indexA - indexB;
+    });
 }
 
 function formatMultilineText(value: string) {
@@ -359,31 +396,14 @@ export default function Home() {
     };
   }, []);
 
-  const siteName = getContentValue(
-    content,
-    "site_name"
-  );
-
-  const heroKicker = getContentValue(
-    content,
-    "hero_kicker"
-  );
-
-  const heroLocation = getContentValue(
-    content,
-    "hero_location"
-  );
-
-  const heroTitle = getContentValue(
-    content,
-    "hero_title"
-  );
-
+  const siteName = getContentValue(content, "site_name");
+  const heroKicker = getContentValue(content, "hero_kicker");
+  const heroLocation = getContentValue(content, "hero_location");
+  const heroTitle = getContentValue(content, "hero_title");
   const heroDescription = getContentValue(
     content,
     "hero_description"
   );
-
   const heroCategories = getContentValue(
     content,
     "hero_categories"
@@ -526,8 +546,6 @@ export default function Home() {
         className="relative flex min-h-screen items-center overflow-hidden"
       >
 
-        {/* PHOTO DE FOND */}
-
         <div className="absolute inset-0">
           <Image
             src="/images/hero-final.jpeg"
@@ -539,13 +557,9 @@ export default function Home() {
           />
         </div>
 
-        {/* OVERLAY */}
-
         <div className="absolute inset-0 bg-[#160f0a]/65" />
 
         <div className="absolute inset-0 bg-gradient-to-r from-[#160f0a]/95 via-[#160f0a]/65 to-[#160f0a]/30" />
-
-        {/* FORME CIRCULAIRE */}
 
         <div className="absolute -right-40 -top-32 h-[560px] w-[560px] rounded-full border border-[#f3e9d0]/15 bg-[#f3e9d0]/5 blur-[1px] md:h-[680px] md:w-[680px]" />
 
@@ -594,6 +608,7 @@ export default function Home() {
               {heroCategories
                 .split("•")
                 .map((category, index, array) => (
+
                   <span
                     key={`${category}-${index}`}
                     className="flex items-center gap-3"
@@ -610,6 +625,7 @@ export default function Home() {
                     )}
 
                   </span>
+
                 ))}
 
             </div>
@@ -636,8 +652,6 @@ export default function Home() {
           </div>
 
         </div>
-
-        {/* INDICATEUR */}
 
         <a
           href="#prestations"
@@ -720,11 +734,11 @@ export default function Home() {
 
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#cfa97c]/30 text-[#cfa97c]">
 
-                    {group.category.toUpperCase() ===
-                    "CHIENS" ? (
+                    {group.category === "PETIT CHIEN" ||
+                    group.category === "INTERMÉDIAIRE" ||
+                    group.category === "GRAND CHIEN" ? (
                       <DogIcon />
-                    ) : group.category.toUpperCase() ===
-                      "CHATS" ? (
+                    ) : group.category === "CHAT" ? (
                       <CatIcon />
                     ) : (
                       <HeartIcon />
@@ -1036,6 +1050,7 @@ export default function Home() {
                     className="mt-3 flex items-center gap-3 font-times text-lg text-[#f3e9d0] transition hover:text-[#cfa97c]"
                   >
                     <FacebookIcon />
+
                     <span>
                       {contactFacebook || "coupedewoof"}
                     </span>
