@@ -1,7 +1,7 @@
 "use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
 
 const fallbackServices = [
   {
@@ -120,6 +120,7 @@ function groupServicesFromApi(items: ApiService[] | undefined) {
     active
       .filter((item) => {
         const category = item.category.toLowerCase();
+
         return patterns.some((pattern) => category.includes(pattern));
       })
       .map((item) => [item.name, item.price] as ServiceRow);
@@ -130,7 +131,12 @@ function groupServicesFromApi(items: ApiService[] | undefined) {
 
   const cat = findByCategory(["chat", "félin", "felin"]);
   const nac = findByCategory(["nac"]);
-  const other = findByCategory(["autre", "complément", "complement", "soin"]);
+  const other = findByCategory([
+    "autre",
+    "complément",
+    "complement",
+    "soin",
+  ]);
 
   return {
     services: [
@@ -260,11 +266,16 @@ function ServiceList({
 
 export default function Home() {
   const [siteServices, setSiteServices] = useState(fallbackServices);
-  const [siteOtherServices, setSiteOtherServices] = useState(fallbackOtherServices);
-  const [siteCatServices, setSiteCatServices] = useState(fallbackCatServices);
-  const [siteNacServices, setSiteNacServices] = useState(fallbackNacServices);
-  const [siteGallery, setSiteGallery] = useState(fallbackGallery);
-  const [siteContent, setSiteContent] = useState<Record<string, string>>({});
+  const [siteOtherServices, setSiteOtherServices] =
+    useState(fallbackOtherServices);
+  const [siteCatServices, setSiteCatServices] =
+    useState(fallbackCatServices);
+  const [siteNacServices, setSiteNacServices] =
+    useState(fallbackNacServices);
+  const [siteGallery, setSiteGallery] =
+    useState(fallbackGallery);
+  const [siteContent, setSiteContent] =
+    useState<Record<string, string>>({});
 
   useEffect(() => {
     async function loadSiteContent() {
@@ -287,13 +298,14 @@ export default function Home() {
         setSiteNacServices(grouped.nacServices);
 
         if (data.siteContent) {
-          const contentMap = data.siteContent.reduce<Record<string, string>>(
-            (acc, item) => {
-              acc[item.key] = item.value;
-              return acc;
-            },
-            {}
-          );
+          const contentMap =
+            data.siteContent.reduce<Record<string, string>>(
+              (acc, item) => {
+                acc[item.key] = item.value;
+                return acc;
+              },
+              {}
+            );
 
           setSiteContent(contentMap);
         }
@@ -312,7 +324,10 @@ export default function Home() {
           }
         }
       } catch (error) {
-        console.error("Impossible de charger le contenu du site.", error);
+        console.error(
+          "Impossible de charger le contenu du site.",
+          error
+        );
       }
     }
 
@@ -321,11 +336,25 @@ export default function Home() {
 
   const phone = siteContent.phone || "07 62 53 14 92";
   const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
-  const email = siteContent.email || "coupedewoof@gmail.com";
-  const address = siteContent.address || "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau";
-  const instagram = siteContent.instagram || "@coupedewoof";
-  const instagramHandle = instagram.startsWith("@") ? instagram : `@${instagram}`;
-  const instagramUrl = `https://www.instagram.com/${instagramHandle.replace("@", "")}/`;
+
+  const email =
+    siteContent.email || "coupedewoof@gmail.com";
+
+  const address =
+    siteContent.address ||
+    "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau";
+
+  const instagram =
+    siteContent.instagram || "@coupedewoof";
+
+  const instagramHandle = instagram.startsWith("@")
+    ? instagram
+    : `@${instagram}`;
+
+  const instagramUrl = `https://www.instagram.com/${instagramHandle.replace(
+    "@",
+    ""
+  )}/`;
 
   const hours = [
     ["Lundi", siteContent.monday || "9h00–12h00 / 13h30–18h00"],
@@ -345,13 +374,27 @@ export default function Home() {
       ========================================================= */}
 
       <header className="absolute left-0 top-0 z-50 w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+
+          {/* LOGO + NOM DU SITE */}
 
           <a
             href="#accueil"
-            className="font-display text-xl tracking-wide text-[#f3e9d0] drop-shadow-lg"
+            className="flex items-center gap-3 text-[#f3e9d0] drop-shadow-lg"
           >
-            Coupe de Woof
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#f3e9d0]">
+              <Image
+                src="/images/logo.jpeg"
+                alt="Logo Coupe de Woof"
+                fill
+                className="object-contain"
+                sizes="44px"
+              />
+            </div>
+
+            <span className="font-display text-xl tracking-wide">
+              Coupe de Woof
+            </span>
           </a>
 
           <nav className="hidden items-center gap-9 text-sm font-medium text-[#f3e9d0] md:flex">
@@ -434,8 +477,7 @@ export default function Home() {
 
         <div className="relative z-20 mx-auto flex min-h-screen max-w-7xl items-center px-6 pb-20 pt-28 lg:px-10">
 
-          <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_0.8fr]">
-
+          <div className="grid w-full items-center gap-12">
 
             {/* =====================================================
                 TEXTE GAUCHE
@@ -486,7 +528,9 @@ export default function Home() {
               <p className="mt-7 max-w-xl font-times text-xl leading-8 text-[#f3e9d0]/95 sm:text-2xl">
 
                 Toilettage, soins et mise en beauté
+
                 <br className="hidden sm:block" />
+
                 pour chiens, chats et NAC.
 
               </p>
@@ -522,51 +566,6 @@ export default function Home() {
                 >
                   Nous contacter
                 </a>
-
-              </div>
-
-            </div>
-
-
-            {/* =====================================================
-                LOGO DROITE
-            ===================================================== */}
-
-            <div className="flex justify-center lg:justify-end">
-
-              <div className="relative w-[280px] sm:w-[340px] lg:w-[390px]">
-
-                {/* HALO */}
-
-                <div className="absolute -inset-8 rounded-[3rem] bg-[#f3e9d0]/10 blur-2xl" />
-
-                {/* CADRE */}
-
-                <div className="relative overflow-hidden rounded-[2.5rem] border border-[#f3e9d0]/25 bg-[#f3e9d0] p-4 shadow-2xl shadow-black/30 sm:p-5">
-
-                  <div className="relative aspect-square overflow-hidden rounded-[2rem]">
-
-                    <Image
-                      src="/images/logo.jpeg"
-                      alt="Logo Coupe de Woof"
-                      fill
-                      priority
-                      className="object-contain"
-                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 390px"
-                    />
-
-                  </div>
-
-                </div>
-
-
-                {/* PETITE SIGNATURE */}
-
-                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[#cfa97c]/40 bg-[#3a2c20]/95 px-5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#cfa97c] shadow-xl">
-
-                  Coupe de Woof
-
-                </div>
 
               </div>
 
@@ -631,7 +630,9 @@ export default function Home() {
               <h2 className="mt-5 font-display text-5xl leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
 
                 Prendre soin de
+
                 <br />
+
                 votre compagnon.
 
               </h2>
@@ -875,6 +876,7 @@ export default function Home() {
               </h2>
 
             </div>
+
 
             <p className="max-w-md text-sm leading-7 text-[#3a2c20]/65">
 
