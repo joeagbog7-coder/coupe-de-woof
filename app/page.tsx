@@ -46,8 +46,13 @@ const defaultContent: Record<string, string> = {
     "30 Rue du Colonel Boutin, 44430 Le Loroux-Bottereau",
   contact_instagram: "@coupedewoof",
   contact_facebook: "coupedewoof",
-  opening_hours:
-    "Lundi : 9h00 – 18h00\nMardi : 9h00 – 18h00\nMercredi : 9h00 – 18h00\nJeudi : 9h00 – 18h00\nVendredi : 9h00 – 18h00\nSamedi : 9h00 – 17h00\nDimanche : Fermé",
+  monday: "9h00–12h00 / 13h30–18h00",
+  tuesday: "9h00–12h00 / 13h30–18h00",
+  wednesday: "9h00–12h00 / 13h30–18h00",
+  thursday: "Fermé",
+  friday: "9h00–12h00 / 13h30–18h00",
+  saturday: "9h00–14h00",
+  sunday: "Fermé",
 };
 
 const defaultServices: Service[] = [
@@ -434,10 +439,15 @@ export default function Home() {
     "contact_facebook"
   );
 
-  const openingHours = getContentValue(
-    content,
-    "opening_hours"
-  );
+  const openingHours = [
+    ["Lundi", getContentValue(content, "monday")],
+    ["Mardi", getContentValue(content, "tuesday")],
+    ["Mercredi", getContentValue(content, "wednesday")],
+    ["Jeudi", getContentValue(content, "thursday")],
+    ["Vendredi", getContentValue(content, "friday")],
+    ["Samedi", getContentValue(content, "saturday")],
+    ["Dimanche", getContentValue(content, "sunday")],
+  ] as const;
 
   const serviceGroups = useMemo(() => {
     if (services.length === 0) {
@@ -1064,9 +1074,22 @@ export default function Home() {
                     Horaires
                   </p>
 
-                  <p className="mt-4 whitespace-pre-line font-times text-base leading-7 text-[#f3e9d0]/80">
-                    {openingHours}
-                  </p>
+                  <div className="mt-4 space-y-2 font-times text-base leading-7 text-[#f3e9d0]/80">
+                    {openingHours.map(([day, hours]) => (
+                      <div
+                        key={day}
+                        className="flex items-start justify-between gap-6"
+                      >
+                        <span className="shrink-0">
+                          {day}
+                        </span>
+
+                        <span className="text-right">
+                          {hours || "Fermé"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
                 </div>
 
